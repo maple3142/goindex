@@ -110,7 +110,7 @@ function list_files(path,files){
     html = "";
     for(i in files){
         var item = files[i];
-        var p = path+item.name+'/';
+        var p = path+encodeURIComponent(item.name)+'/';
         if(item['size']==undefined){
             item['size'] = "";
         }
@@ -128,7 +128,7 @@ function list_files(path,files){
 	            </a>
 	        </li>`;
         }else{
-            var p = path+item.name;
+            var p = path+encodeURIComponent(item.name);
             var c = "file";
             if(item.name == "README.md"){
                  get_file(p, item, function(data){
