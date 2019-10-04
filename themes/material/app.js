@@ -1,9 +1,9 @@
-// 在head 中 加载 必要静态
+// 在head 中 載入 必要靜態
 document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
 // markdown支持
 document.write('<script src="//cdn.jsdelivr.net/npm/markdown-it@9.1.0/dist/markdown-it.min.js"></script>');
 document.write('<style>.mdui-appbar .mdui-toolbar{height:56px;font-size:1pc}.mdui-toolbar>*{padding:0 6px;margin:0 2px}.mdui-toolbar>i{opacity:.5}.mdui-toolbar>.mdui-typo-headline{padding:0 1pc 0 0}.mdui-toolbar>i{padding:0}.mdui-toolbar>a:hover,a.active,a.mdui-typo-headline{opacity:1}.mdui-container{max-width:980px}.mdui-list-item{transition:none}.mdui-list>.th{background-color:initial}.mdui-list-item>a{width:100%;line-height:3pc}.mdui-list-item{margin:2px 0;padding:0}.mdui-toolbar>a:last-child{opacity:1}@media screen and (max-width:980px){.mdui-list-item .mdui-text-right{display:none}.mdui-container{width:100%!important;margin:0}.mdui-toolbar>.mdui-typo-headline,.mdui-toolbar>a:last-child,.mdui-toolbar>i:first-child{display:block}}</style>');
-// 初始化页面，并载入必要资源
+// 初始化頁面，並載入必要資源
 function init(){
     document.siteName = $('title').html();
     $('body').addClass("mdui-theme-primary-blue-grey mdui-theme-accent-blue");
@@ -38,7 +38,7 @@ function title(path){
     $('title').html(document.siteName+' - '+path);
 }
 
-// 渲染导航栏
+// 渲染導航欄
 function nav(path){
     var html = "";
     html += `<a href="/" class="mdui-typo-headline folder">${document.siteName}</a>`;
@@ -70,7 +70,7 @@ function list(path){
 	     文件
 	    </div> 
 	    <div class="mdui-col-sm-3 mdui-text-right">
-	     修改时间
+	     修改時間
 	    </div> 
 	    <div class="mdui-col-sm-2 mdui-text-right">
 	     大小
@@ -93,7 +93,7 @@ function list(path){
     $.post(path,'{"password":"'+password+'"}', function(data,status){
         var obj = jQuery.parseJSON(data);
         if(typeof obj != 'null' && obj.hasOwnProperty('error') && obj.error.code == '401'){
-            var pass = prompt("目录加密，请输入密码","");
+            var pass = prompt("目錄加密，請輸入密碼","");
             localStorage.setItem('password'+path, pass);
             if(pass != null && pass != ""){
                 list(path);
@@ -214,7 +214,7 @@ function file_code(path){
 <pre id="editor" ></pre>
 </div>
 <div class="mdui-textfield">
-	<label class="mdui-textfield-label">下载地址</label>
+	<label class="mdui-textfield-label">下載網址</label>
 	<input class="mdui-textfield-input" type="text" value="${href}"/>
 </div>
 <a href="${href}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
@@ -255,9 +255,9 @@ function file_video(path){
 	  <source src="${url}" type="video/mp4">
 	</video>
 	<br>
-	<!-- 固定标签 -->
+	<!-- 固定標籤 -->
 	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">下载地址</label>
+	  <label class="mdui-textfield-label">下載網址</label>
 	  <input class="mdui-textfield-input" type="text" value="${url}"/>
 	</div>
 	<div class="mdui-textfield">
@@ -279,7 +279,7 @@ function file_image(path){
 	<img class="mdui-img-fluid" src="${url}"/>
 	<br>
 	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">下载地址</label>
+	  <label class="mdui-textfield-label">下載網址</label>
 	  <input class="mdui-textfield-input" type="text" value="${url}"/>
 	</div>
 	<div class="mdui-textfield">
@@ -298,24 +298,24 @@ function file_image(path){
 }
 
 
-//时间转换
+//時間轉換
 function utc2beijing(utc_datetime) {
-    // 转为正常的时间格式 年-月-日 时:分:秒
+    // 轉為正常的時間格式 年-月-日 時:分:秒
     var T_pos = utc_datetime.indexOf('T');
     var Z_pos = utc_datetime.indexOf('Z');
     var year_month_day = utc_datetime.substr(0,T_pos);
     var hour_minute_second = utc_datetime.substr(T_pos+1,Z_pos-T_pos-1);
     var new_datetime = year_month_day+" "+hour_minute_second; // 2017-03-31 08:02:06
 
-    // 处理成为时间戳
+    // 處理成為時間戳
     timestamp = new Date(Date.parse(new_datetime));
     timestamp = timestamp.getTime();
     timestamp = timestamp/1000;
 
-    // 增加8个小时，北京时间比utc时间多八个时区
+    // 增加8個小時，北京時間比utc時間多八個時區
     var unixtimestamp = timestamp+8*60*60;
 
-    // 时间戳转为时间
+    // 時間戳轉為時間
     var unixtimestamp = new Date(unixtimestamp*1000);
     var year = 1900 + unixtimestamp.getYear();
     var month = "0" + (unixtimestamp.getMonth() + 1);
@@ -329,7 +329,7 @@ function utc2beijing(utc_datetime) {
         + second.substring(second.length-2, second.length);
 }
 
-// bytes自适应转换到KB,MB,GB
+// bytes自適應轉換到KB,MB,GB
 function formatFileSize(bytes) {
     if (bytes>=1000000000) {bytes=(bytes/1000000000).toFixed(2)+' GB';}
     else if (bytes>=1000000)    {bytes=(bytes/1000000).toFixed(2)+' MB';}
@@ -361,7 +361,7 @@ function markdown(el, data){
     }
 }
 
-// 监听回退事件
+// 監聽回退事件
 window.onpopstate = function(){
     var path = window.location.pathname;
     render(path);
